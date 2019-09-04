@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGenerator", "KeyGenerator\KeyGenerator.csproj", "{7437BEB7-BAA3-4D33-9C3B-7E1295EF801C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoder", "Encoder\Encoder.csproj", "{37F523A2-263A-4ED6-8875-1D09BCA5FE57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7437BEB7-BAA3-4D33-9C3B-7E1295EF801C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7437BEB7-BAA3-4D33-9C3B-7E1295EF801C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7437BEB7-BAA3-4D33-9C3B-7E1295EF801C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7437BEB7-BAA3-4D33-9C3B-7E1295EF801C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A939E4B-8411-49B7-A90B-7F01D161351F}
+	EndGlobalSection
+EndGlobal
