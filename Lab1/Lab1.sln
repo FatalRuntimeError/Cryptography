@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGenerator", "KeyGenerato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoder", "Encoder\Encoder.csproj", "{37F523A2-263A-4ED6-8875-1D09BCA5FE57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decoder", "Decoder\Decoder.csproj", "{15FEF227-677A-440C-8FF7-35D01336B84F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigramAnalizer", "BigramAnalizer\BigramAnalizer.csproj", "{BC6AD364-06D2-4DFD-98DD-FC9A6DB0755C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37F523A2-263A-4ED6-8875-1D09BCA5FE57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15FEF227-677A-440C-8FF7-35D01336B84F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FEF227-677A-440C-8FF7-35D01336B84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FEF227-677A-440C-8FF7-35D01336B84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15FEF227-677A-440C-8FF7-35D01336B84F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC6AD364-06D2-4DFD-98DD-FC9A6DB0755C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC6AD364-06D2-4DFD-98DD-FC9A6DB0755C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC6AD364-06D2-4DFD-98DD-FC9A6DB0755C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC6AD364-06D2-4DFD-98DD-FC9A6DB0755C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,24 +6,28 @@ namespace Lab1
 {
     class Program
     {
-        static void Main(string[] args)
+        static string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+
+        static string Shuffle()
         {
-            Random rand = new Random();
-            char[] alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя".ToCharArray();
+            Random rand = new Random(Environment.TickCount);
+            StringBuilder shuffled = new StringBuilder(alphabet);
 
             for (int i = 0; i < 33; i++)
             {
                 int j = rand.Next(0, i);
-                char temp = alphabet[i];
-                alphabet[i] = alphabet[j];
-                alphabet[j] = temp;
+                char temp = shuffled[i];
+                shuffled[i] = shuffled[j];
+                shuffled[j] = temp;
             }
 
-            Console.WriteLine("Введите имя файла для записи ключа:");
-            string filename = Console.ReadLine();
+            return shuffled.ToString();
+        }
 
-            using (StreamWriter fstream = new StreamWriter(filename, false, Encoding.UTF8))
-                fstream.WriteLine(alphabet);
+        static void Main(string[] args)
+        {
+            using (StreamWriter fstream = new StreamWriter("keys.txt", true, Encoding.UTF8))
+                fstream.WriteLine(Shuffle());
         }
     }
 }
