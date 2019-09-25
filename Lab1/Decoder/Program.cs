@@ -57,36 +57,6 @@ namespace Decoder
                 }
         }
 
-        static void MonogramAnalysis(string text)
-        {
-            double freqBit = 1.0 / text.Length;
-
-            foreach (var letter in alphabet)
-                actualMonoFreq[letter] = 0;
-
-            foreach (var letter in text)
-                actualMonoFreq[letter] += freqBit;
-
-            actualMonoFreq = actualMonoFreq.OrderBy(x => -x.Value).ToDictionary(x => x.Key, x => x.Value);
-        }
-
-        static void BigramAnalysis(string text)
-        {
-            double freqBit = 1.0 / (text.Length - 1);
-
-            foreach (var letter1 in alphabet)
-                foreach (var letter2 in alphabet)
-                    actualBiFreq[letter1.ToString() + letter2.ToString()] = 0;
-
-            for (int i = 0; i < text.Length - 1; i++)
-            {
-                string bigram = text[i].ToString() + text[i + 1].ToString();
-                actualBiFreq[bigram] += freqBit;
-            }
-
-            actualBiFreq = actualBiFreq.OrderBy(x => -x.Value).ToDictionary(x => x.Key, x => x.Value);
-        }
-
         static void TextAnalysis(string text, string key)
         {
             double monoFreqBit = 1.0 / text.Length;
@@ -186,105 +156,105 @@ namespace Decoder
 
         static Dictionary<string, double> GenerateKeys(Dictionary<string, double> keys)
         {
-            Dictionary<string, double> newKeys = new Dictionary<string, double>();
+            Dictionary<string, double> newKeys = new Dictionary<string, double>(keys);
 
-            for (int i = 0; i < 10; i++)
+            var tmp = keys.ToList();
+            List<string> randomKeys = new List<string>();
+
+            for (int i = 0; i < 15; i++)
+                randomKeys.Add(tmp[i].Key);
+
+            for (int i = 0; i < 35; i++)
             {
                 string newKey = Shuffle();
-                if (!keys.ContainsKey(newKey))
-                    keys.Add(newKey, 0.0);
+                randomKeys.Add(newKey);
             }
 
-            foreach (var key1 in keys)
-                foreach (var key2 in keys)
-                    if (key1.Key != key2.Key)
-                    {
-                        Random rand = new Random(Environment.TickCount + i++);
+            string firstKey = keys.First().Key;
 
-                        int a = rand.Next(32);
-                        int b = rand.Next(a, 34);
-                        string parent1 = key1.Key;
-                        string parent2 = key2.Key;
+            foreach (var key in randomKeys)
+            {
+                Random rand = new Random(Environment.TickCount + i++);
 
-                        char[] child1 = parent1.ToCharArray();
-                        char[] child2 = parent2.ToCharArray();
+                int a = rand.Next(32);
+                int b = rand.Next(a, 34);
+                string parent1 = firstKey;
+                string parent2 = key;
 
-                        Dictionary<char, char> accordance1 = new Dictionary<char, char>();
-                        Dictionary<char, char> accordance2 = new Dictionary<char, char>();
+                char[] child1 = parent1.ToCharArray();
+                char[] child2 = parent2.ToCharArray();
 
-                        for (int i = a; i < b; i++)
-                        {
-                            child1[i] = parent2[i];
-                            child2[i] = parent1[i];
-                            accordance1.Add(parent1[i], parent2[i]);
-                            accordance2.Add(parent2[i], parent1[i]);
-                        }
+                Dictionary<char, char> accordance1 = new Dictionary<char, char>();
+                Dictionary<char, char> accordance2 = new Dictionary<char, char>();
 
-                        for (int i = 0; i < a; i++)
-                        {
-                            if (accordance1.ContainsKey(child1[i]))
-                            {
-                                child1[i] = accordance1[child1[i]];
-                            }
-                            else if (accordance2.ContainsKey(child1[i]))
-                            {
-                                child1[i] = accordance2[child1[i]];
-                            }
+                for (int i = a; i < b; i++)
+                {
+                    child1[i] = parent2[i];
+                    child2[i] = parent1[i];
+                    accordance1.Add(parent1[i], parent2[i]);
+                    accordance2.Add(parent2[i], parent1[i]);
+                }
 
-                            if (accordance1.ContainsKey(child2[i]))
-                            {
-                                child2[i] = accordance1[child2[i]];
-                            }
-                            else if (accordance2.ContainsKey(child2[i]))
-                            {
-                                child2[i] = accordance2[child2[i]];
-                            }
-                        }
+                for (int i = 0; i < a; i++)
+                {
+                    if (accordance1.ContainsKey(child1[i]))
+                        child1[i] = accordance1[child1[i]];
+                    else if (accordance2.ContainsKey(child1[i]))
+                        child1[i] = accordance2[child1[i]];
 
-                        for (int i = b; i < 33; i++)
-                        {
-                            if (accordance1.ContainsKey(child1[i]))
-                            {
-                                child1[i] = accordance1[child1[i]];
-                            }
-                            else if (accordance2.ContainsKey(child1[i]))
-                            {
-                                child1[i] = accordance2[child1[i]];
-                            }
+                    if (accordance1.ContainsKey(child2[i]))
+                        child2[i] = accordance1[child2[i]];
+                    else if (accordance2.ContainsKey(child2[i]))
+                        child2[i] = accordance2[child2[i]];
+                }
 
-                            if (accordance1.ContainsKey(child2[i]))
-                            {
-                                child2[i] = accordance1[child2[i]];
-                            }
-                            else if (accordance2.ContainsKey(child2[i]))
-                            {
-                                child2[i] = accordance2[child2[i]];
-                            }
-                        }
+                for (int i = b; i < 33; i++)
+                {
+                    if (accordance1.ContainsKey(child1[i]))
+                        child1[i] = accordance1[child1[i]];
+                    else if (accordance2.ContainsKey(child1[i]))
+                        child1[i] = accordance2[child1[i]];
 
-                        bool isFull = true;
-                        for (int i = 0; i < 33 && isFull; i++)
-                            isFull = child1.Contains(alphabet[i]);
+                    if (accordance1.ContainsKey(child2[i]))
+                        child2[i] = accordance1[child2[i]];
+                    else if (accordance2.ContainsKey(child2[i]))
+                        child2[i] = accordance2[child2[i]];
+                }
 
-                        string child1str = new string(child1);
-                        string child2str = new string(child2);
+                bool isFull = true;
+                for (int i = 0; i < 33 && isFull; i++)
+                    isFull = child1.Contains(alphabet[i]);
 
-                        if (isFull)
-                        {
-                            if (!newKeys.ContainsKey(child1str))
-                                newKeys.Add(child1str, 0.0);
+                string child1str = new string(child1);
+                string child2str = new string(child2);
 
-                            if (!newKeys.ContainsKey(child2str))
-                                newKeys.Add(child2str, 0.0);
-                        }
-                    }
+                if (isFull)
+                {
+                    if (!newKeys.ContainsKey(child1str))
+                        newKeys.Add(child1str, 0.0);
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    string newKey = Shuffle();
-            //    if (!newKeys.ContainsKey(newKey))
-            //        newKeys.Add(newKey, 0.0);
-            //}
+                    if (!newKeys.ContainsKey(child2str))
+                        newKeys.Add(child2str, 0.0);
+                }
+
+            }
+
+            foreach (var key in keys)
+            {
+                Random rand = new Random(Environment.TickCount + i++);
+
+                int a = rand.Next(33);
+                int b = rand.Next(33);
+
+                StringBuilder newKeyBuilder = new StringBuilder(key.Key);
+                char temp = newKeyBuilder[a];
+                newKeyBuilder[a] = newKeyBuilder[b];
+                newKeyBuilder[b] = temp;
+                string newKey = newKeyBuilder.ToString();
+
+                if (!newKeys.ContainsKey(newKey))
+                    newKeys.Add(newKey, 0.0);
+            }
 
             return newKeys;
         }
@@ -313,21 +283,25 @@ namespace Decoder
 
             // Чтение исходных ключей
             Dictionary<string, double> keys = new Dictionary<string, double>();
-            using (StreamReader stream = new StreamReader("keys.txt", Encoding.UTF8))
-                for (int i = 0; i < BestKeysAmount; i++)
-                    keys.Add(stream.ReadLine(), 0.0);
+            while (keys.Count < BestKeysAmount)
+            {
+                string newKey = Shuffle();
 
+                if (!keys.ContainsKey(newKey))
+                    keys.Add(newKey, 0.0);
+            }
 
-            int iterNum = int.Parse(Console.ReadLine());
+            int iterNum = 500;
             for (int i = 0; i < iterNum; i++)
             {
                 keys = GenerateKeys(keys);
                 keys = GeneticAlgorithm(text, keys);
             }
 
+            string recodedText = RecodeText(text, keys.First().Key);
+
             using (StreamWriter stream = new StreamWriter("result.txt", false, Encoding.UTF8))
-                foreach (var pair in keys)
-                    stream.WriteLine("{0} {1}", pair.Key, pair.Value);
+                stream.Write(recodedText);
         }
     }
 }
