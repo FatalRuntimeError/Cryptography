@@ -80,7 +80,6 @@ namespace Decoder
             {
                 GenerateNewKeys();
                 Selection();
-                Console.WriteLine(BestKeys.First().Value);
             }
 
             BestKey = BestKeys.First().Key;
