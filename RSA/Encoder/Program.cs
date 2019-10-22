@@ -1,62 +1,95 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 
 namespace Encoder
 {
 	class Program
 	{
-		static int ModularPow(int b, int exp, int mod)
+		static ulong ModularAdd(ulong a, ulong b, ulong mod)
 		{
-			int result = 1;
+			ulong result = 0;
 
-			while (exp > 0)
+			a = a % mod;
+			b = b % mod;
+
+			ulong diff = mod > a ? mod - a : a - mod;
+
+			if (b < diff)
+				result = a + b;
+			else
+				result = b - diff;
+
+			return result % mod;
+		}
+
+		static ulong ModularMult(ulong a, ulong b, ulong mod)
+		{
+			ulong result = 0;
+			a = a % mod;
+			b = b % mod;
+
+			while (b != 0)
 			{
-				if (exp % 2 == 1)
-					result = (result * b) % mod;
-				exp >>= 1;
-				b = (b * b) % mod;
+				if (b % 2 == 1)
+					result = ModularAdd(result, a, mod);
+				a = ModularAdd(a, a, mod);
+				b >>= 1;
 			}
 
 			return result;
 		}
 
-		static void ParseKey(string filename, ref int mod, ref int exp)
+		static ulong ModularPow(ulong b, ulong exp, ulong mod)
+		{
+			ulong result = 1;
+
+			while (exp > 0)
+			{
+				if (exp % 2 == 1)
+					result = ModularMult(result, b, mod);
+				exp >>= 1;
+				b = ModularMult(b, b, mod);
+			}
+
+			return result;
+		}
+
+		static void ParseKey(string filename, ref ulong mod, ref ulong exp)
 		{
 			string data = File.ReadAllText(filename);
 			string[] tokens = data.Split(' ');
-			mod = int.Parse(tokens[0]);
-			exp = int.Parse(tokens[1]);
+			mod = ulong.Parse(tokens[0]);
+			exp = ulong.Parse(tokens[1]);
 		}
 
 		static void EncodeMSG()
 		{
-			int mod = 0, exp = 0;
+			ulong mod = 0, exp = 0;
 			Console.Write("Enter file with public key: ");
 			string filename = Console.ReadLine();
 			ParseKey(filename, ref mod, ref exp);
 
 			Console.Write("Enter file with message: ");
 			filename = Console.ReadLine();
-			int m = int.Parse(File.ReadAllText(filename));
+			ulong m = ulong.Parse(File.ReadAllText(filename));
 
-			int c = ModularPow(m, exp, mod);
+			ulong c = ModularPow(m, exp, mod);
 			File.WriteAllText("EncodedMessage.txt", c.ToString());
 		}
 
 		static void DecodeMSG()
 		{
 
-			int mod = 0, exp = 0;
+			ulong mod = 0, exp = 0;
 			Console.Write("Enter file with private key: ");
 			string filename = Console.ReadLine();
 			ParseKey(filename, ref mod, ref exp);
 
 			Console.Write("Enter file with message: ");
 			filename = Console.ReadLine();
-			int m = int.Parse(File.ReadAllText(filename));
+			ulong m = ulong.Parse(File.ReadAllText(filename));
 
-			int c = ModularPow(m, exp, mod);
+			ulong c = ModularPow(m, exp, mod);
 			File.WriteAllText("DecodedMessage.txt", c.ToString());
 		}
 

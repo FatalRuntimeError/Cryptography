@@ -5,11 +5,11 @@ namespace KeyGenerator
 {
 	class Program
 	{
-		static int GCD(int a, int b)
+		static ulong GCD(ulong a, ulong b)
 		{
 			while (b != 0)
 			{
-				int t = b;
+				ulong t = b;
 				b = a % b;
 				a = t;
 			}
@@ -17,29 +17,29 @@ namespace KeyGenerator
 			return a;
 		}
 
-		static int LCM(int a, int b) => a * b / GCD(a, b);
+		static ulong LCM(ulong a, ulong b) => a * b / GCD(a, b);
 
-		static bool IsPrime(int num)
+		static bool IsPrime(ulong num)
 		{
 			bool isPrime = true;
-			int top = (int)Math.Sqrt(num) + 1;
-			for (int i = 2; i < top && isPrime; i++)
+			ulong top = (ulong)Math.Sqrt(num) + 1;
+			for (ulong i = 2; i < top && isPrime; i++)
 				if (num % i == 0)
 					isPrime = false;
 
 			return isPrime;
 		}
 
-		static bool IsCoprime(int a, int b) => GCD(a, b) == 1;
+		static bool IsCoprime(ulong a, ulong b) => GCD(a, b) == 1;
 
-		static void ReadPQ(ref int p, ref int q)
+		static void ReadPQ(ref ulong p, ref ulong q)
 		{
 			do
 			{
 				do
 				{
 					Console.Write("Enter p: ");
-					p = int.Parse(Console.ReadLine());
+					p = ulong.Parse(Console.ReadLine());
 
 					if (!IsPrime(p))
 						Console.WriteLine("ERROR!. p is not prime number.\n");
@@ -49,7 +49,7 @@ namespace KeyGenerator
 				do
 				{
 					Console.Write("Enter q: ");
-					q = int.Parse(Console.ReadLine());
+					q = ulong.Parse(Console.ReadLine());
 
 					if (!IsPrime(q))
 						Console.WriteLine("ERROR!. q is not prime number.\n");
@@ -62,14 +62,14 @@ namespace KeyGenerator
 			while (p == q);
 		}
 
-		static int ModInv(int e, int ln)
+		static ulong ModInv(ulong e, ulong ln)
 		{
-			int t = 0, newt = 1;
-			int r = ln, newr = e;
+			ulong t = 0, newt = 1;
+			ulong r = ln, newr = e;
 
 			while (newr != 0)
 			{
-				int q = r / newr;
+				ulong q = r / newr;
 				(t, newt) = (newt, t - q * newt);
 				(r, newr) = (newr, r - q * newr);
 			}
@@ -79,24 +79,37 @@ namespace KeyGenerator
 
 		static void Main(string[] args)
 		{
-			Random rand = new Random();
-			int p = 0, q = 0;
+			// Read p and q and check if p and q are prime
+			ulong p = 0, q = 0;
 			ReadPQ(ref p, ref q);
 
-			int n = p * q;
-			int ln = LCM(p - 1, q - 1);
+			// Compute n and lambda(n)
+			ulong n = p * q;
+			ulong ln = LCM(p - 1, q - 1);
 
-			int e = rand.Next(2, ln);
+			// Generate e and check if e and lambda(n) are coprime
+			Random rand = new Random();
+			ulong e = (1 << 16) + 1;
 
-			while (!IsCoprime(e, ln))
+			if (e >= ln)
 			{
-				e++;
-				if (e == ln)
-					e = rand.Next(2, ln);
+				e = (ulong)rand.Next(2, (int)ln);
+				while (!IsCoprime(e, ln))
+				{
+					e++;
+					if (e == ln)
+						e = (ulong)rand.Next(2, (int)ln);
+				}
 			}
 
-			int d = ModInv(e, ln);
 
+			while (!IsCoprime(e, ln))
+				e--;
+
+			// Compute d
+			ulong d = ModInv(e, ln);
+
+			// Writing keys to files
 			File.WriteAllText("PublicKey.txt", string.Format("{0} {1}", n, e));
 			File.WriteAllText("PrivateKey.txt", string.Format("{0} {1}", n, d));
 		}
