@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AES", "AES\AES.csproj", "{9BF3E363-768C-4CD0-B64C-472A43299E30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JPGHandler", "JPGHandler\JPGHandler.csproj", "{96A1F5F6-F66B-429B-8D49-DEE2E13F0FD9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BF3E363-768C-4CD0-B64C-472A43299E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF3E363-768C-4CD0-B64C-472A43299E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF3E363-768C-4CD0-B64C-472A43299E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF3E363-768C-4CD0-B64C-472A43299E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A1F5F6-F66B-429B-8D49-DEE2E13F0FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A1F5F6-F66B-429B-8D49-DEE2E13F0FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A1F5F6-F66B-429B-8D49-DEE2E13F0FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A1F5F6-F66B-429B-8D49-DEE2E13F0FD9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D4511CC-BE0E-4F19-8BE1-081EFC9ADF67}
+	EndGlobalSection
+EndGlobal
