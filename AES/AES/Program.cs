@@ -81,8 +81,6 @@ namespace kript4lr333
 	{
 		public HashAlgorithm hashAlgorithm { get; }
 		public Aes aes { get; }
-		private byte[] password;
-		private byte[] key;
 
 		public Encryptor(string hashAlgorithm, byte[] password)
 		{
